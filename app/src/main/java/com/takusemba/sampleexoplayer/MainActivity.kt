@@ -47,9 +47,6 @@ class MainActivity : AppCompatActivity() {
       FrameworkMediaDrm.newInstance(C.WIDEVINE_UUID), drmCallback, null, handler, null)
   private val selector = DefaultTrackSelector()
   private val loadControl = DefaultLoadControl()
-  private val dataSourceFactory = DefaultDataSourceFactory(this, bandwidthMeter,
-      DefaultHttpDataSourceFactory(USER_AGENT, bandwidthMeter)
-  )
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -66,9 +63,13 @@ class MainActivity : AppCompatActivity() {
     val playerView = findViewById<PlayerView>(R.id.player_view)
     playerView.player = player
 
+    val dataSourceFactory = DefaultDataSourceFactory(this, bandwidthMeter,
+        DefaultHttpDataSourceFactory(USER_AGENT, bandwidthMeter)
+    )
     val mediaSource = when (type) {
-      StreamingType.DASH -> createDashSource(if (isDrm) DRM_DASH_URL else DASH_URL)
-      StreamingType.HLS -> createHlsSource(if (isDrm) DRM_HLS_URL else HLS_URL)
+      StreamingType.DASH ->
+        createDashSource(if (isDrm) DRM_DASH_URL else DASH_URL, dataSourceFactory)
+      StreamingType.HLS -> createHlsSource(if (isDrm) DRM_HLS_URL else HLS_URL, dataSourceFactory)
     }
 
     player.prepare(mediaSource)
@@ -76,14 +77,16 @@ class MainActivity : AppCompatActivity() {
     return player
   }
 
-  private fun createDashSource(url: String): DashMediaSource {
+  private fun createDashSource(url: String,
+      dataSourceFactory: DefaultDataSourceFactory): DashMediaSource {
     return DashMediaSource.Factory(
         DefaultDashChunkSource.Factory(dataSourceFactory),
         dataSourceFactory
     ).createMediaSource(Uri.parse(url))
   }
 
-  private fun createHlsSource(url: String): HlsMediaSource {
+  private fun createHlsSource(url: String,
+      dataSourceFactory: DefaultDataSourceFactory): HlsMediaSource {
     return HlsMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(url))
   }
 }
