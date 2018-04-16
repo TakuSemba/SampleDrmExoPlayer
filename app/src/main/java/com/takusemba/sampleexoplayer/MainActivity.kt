@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.DefaultRenderersFactory
@@ -27,10 +28,10 @@ class MainActivity : AppCompatActivity() {
   companion object {
     private const val USER_AGENT = "user-agent"
     private const val MP4_URL = "${BuildConfig.END_POINT}/sample.mp4"
-    private const val HLS_URL = "${BuildConfig.END_POINT}/nondrm/hls/h264_720p.m3u8"
+    private const val HLS_URL = "${BuildConfig.END_POINT}/nondrm/hls-segmented-mp4/master.m3u8"
     private const val DASH_URL = "${BuildConfig.END_POINT}/not/exist"
     private const val DRM_DASH_URL = "${BuildConfig.END_POINT}/drm/dash/sample.mpd"
-    private const val DRM_HLS_URL = "${BuildConfig.END_POINT}/drm/hls/h264_720p.m3u8"
+    private const val DRM_HLS_URL = "${BuildConfig.END_POINT}/drm/hls-segmented-mp4/master.m3u8"
     private const val DRM_LICENSE_URL = "https://widevine-proxy.appspot.com/proxy"
   }
 
