@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private const val HLS_URL = "${BuildConfig.END_POINT}/nondrm/hls-segmented-mp4/master.m3u8"
     private const val DASH_URL = "${BuildConfig.END_POINT}/not/exist"
     private const val DRM_DASH_URL = "${BuildConfig.END_POINT}/drm/dash/sample.mpd"
-    private const val DRM_HLS_URL = "${BuildConfig.END_POINT}/drm/hls-segmented-mp4/master.m3u8"
+    private const val DRM_HLS_URL = "${BuildConfig.END_POINT}/drm/hls2/master.m3u8"
     private const val DRM_LICENSE_URL = "https://widevine-proxy.appspot.com/proxy"
   }
 
